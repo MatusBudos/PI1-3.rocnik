@@ -39,7 +39,6 @@ class Student(Osoba):
 # jozo.pozdrav()
 # jan.pozdrav()
 # matus.pozdrav()
-
 pocet_studentov = 10
 pocet_ucitelov = 5
 studenti = list()
@@ -68,10 +67,11 @@ for i in range (pocet_studentov):
     trieda = trieda + random.choice(("A", "B", "C"))
 
     studenti.append(Student(meno, priezvisko, rok, trieda))
+    studenti.sort(key=lambda studenti: studenti.priezvisko, reverse=False)
 print("Študenti:")
+
 for i in range(pocet_studentov):
-    print(i+1, studenti[i].meno, studenti[i].priezvisko, studenti[i].vek, studenti[i].rok, studenti[i].trieda)
-studenti[1].pozdrav()
+    print(i, studenti[i].meno, studenti[i].priezvisko, studenti[i].vek, studenti[i].rok, studenti[i].trieda)
 
 for i in range (pocet_ucitelov):
 
@@ -89,8 +89,26 @@ for i in range (pocet_ucitelov):
     titul = random.choice(("Ing.", "Mgr.", "Bc."))
     trieda = random.choice(("I.", "II.", "III.", "IV.")) + random.choice(("A", "B", "C"))
     ucitelia.append(Ucitel(meno, priezvisko, rok, titul, predmet, trieda))
+    ucitelia.sort(key=lambda ucitelia: ucitelia.priezvisko, reverse=False)
 print("---------------------------\n")
 print("Učitelia:")
 for i in range(len(ucitelia)):
-    print(i+1, ucitelia[i].meno, ucitelia[i].priezvisko, ucitelia[i].rok, ucitelia[i].titul, ucitelia[i].predmet, ucitelia[i].trieda)
-ucitelia[1].pozdrav()
+    print(i, ucitelia[i].meno, ucitelia[i].priezvisko, ucitelia[i].rok, ucitelia[i].titul, ucitelia[i].predmet, ucitelia[i].trieda)
+
+while True:
+
+    vyber = input("Vyber svoju moznost: ucitel / student / exit:")
+    if vyber == "ucitel":
+        zadane_cislo = input("Zadaj číslo učiteľa: ")
+        print("Zoznam študentov v triede ", ucitelia[int(zadane_cislo)].trieda)
+        for i in range(pocet_studentov):
+            if ucitelia[int(zadane_cislo)].trieda == studenti[i].trieda:
+                print(studenti[i].meno, studenti[i].priezvisko, "\n")
+    elif vyber == "student":
+        zadane_student = input("Zadaj číslo študenta: ")
+        for i in range(pocet_ucitelov):
+            if studenti[int(zadane_student)].trieda == ucitelia[i].trieda:
+                print(studenti[int(zadane_student)].meno, studenti[int(zadane_student)].priezvisko, "má triedneho učiteľa menom", ucitelia[i].meno, ucitelia[i].priezvisko )
+    elif vyber == "exit":
+        break
+
